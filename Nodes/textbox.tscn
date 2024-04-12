@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx5xqyjli8p4t"]
+
+[ext_resource type="Script" path="res://Nodes/textbox.gd" id="1_gd7ql"]
+[ext_resource type="Texture2D" uid="uid://bm20m4suprtpw" path="res://gfx/misc/splash.png" id="1_h7mpn"]
+
+[node name="Textbox" type="Sprite2D"]
+texture = ExtResource("1_h7mpn")
+centered = false
+script = ExtResource("1_gd7ql")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 111.0
+offset_bottom = 41.0
+bbcode_enabled = true
+text = "asd"

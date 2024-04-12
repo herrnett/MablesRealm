@@ -23,6 +23,10 @@ Globals="*res://singletons/Globals.gd"
 Scenechanger="*res://singletons/Scenechanger.tscn"
 Musicplayer="*res://singletons/Musicplayer.tscn"
 
+[gui]
+
+theme/custom_font="res://fonts/PressStart2P-Regular.ttf"
+
 [input]
 
 ui_accept={

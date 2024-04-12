@@ -8,6 +8,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
-		Scenechanger.change_scene("res://testscene.tscn")
+		Scenechanger.change_scene("res://Nodes/testscene.tscn")
 	if Input.is_action_just_pressed("ui_select"):
 		Musicplayer.fade_in()

@@ -1,5 +1,6 @@
 extends AudioStreamPlayer
 
+## Time in seconds for the fade to happen.
 @export var fadetime: int
 var maxvolume = volume_db
 var tween

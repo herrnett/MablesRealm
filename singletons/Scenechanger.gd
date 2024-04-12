@@ -1,7 +1,10 @@
 extends Node2D
 
+## Should there be a fade or should it just cut to the new scene?
 @export var fade: bool
+## The color the fade will happen in.
 @export var fade_color: Color
+## Time in seconds for the fade to happen.
 @export var fadetime: int
 var colorrect = ColorRect.new()
 var tween
