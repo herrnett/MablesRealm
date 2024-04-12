@@ -1,10 +1,23 @@
-extends Node
+extends AudioStreamPlayer
+
+@export var fadetime: int
+var maxvolume = volume_db
+var tween
 
 func fade_out():
 	# tween music volume down to 0
-	var tween = create_tween()
-	tween.tween_property(self, "volume_db", -12, 1)
+	if tween: 
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(self, "volume_db", -80, fadetime)
+	await tween.finished
+	self.stop()
 
 func fade_in():
-	var tween = create_tween()
-	tween.tween_property(self, "volume_db", -12, 1)
+	if not is_playing():
+		# tween music volume to maxvolume
+		if tween: 
+			tween.kill()
+		tween = create_tween()
+		tween.tween_property(self, "volume_db", maxvolume, fadetime)
+		self.play()

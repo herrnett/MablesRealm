@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://yxsffvr08t38"]
+[gd_scene load_steps=2 format=3 uid="uid://yxsffvr08t38"]
 
-[ext_resource type="AudioStream" uid="uid://c402jo8jsiumb" path="res://sfx/test.wav" id="1_4wwud"]
 [ext_resource type="Script" path="res://singletons/Musicplayer.gd" id="2"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
-stream = ExtResource("1_4wwud")
 max_polyphony = 10
 script = ExtResource("2")
+fadetime = 2
