@@ -15,7 +15,7 @@ run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="res://gfx/misc/splash.png"
-config/icon="res://icon.svg"
+config/icon="res://gfx/misc/icon.png"
 
 [autoload]
 
