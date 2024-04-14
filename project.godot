@@ -23,6 +23,14 @@ Globals="*res://singletons/Globals.gd"
 Scenechanger="*res://singletons/Scenechanger.tscn"
 Musicplayer="*res://singletons/Musicplayer.tscn"
 
+[display]
+
+window/size/viewport_width=2048
+window/size/viewport_height=1152
+window/size/window_width_override=1024
+window/size/window_height_override=576
+window/stretch/mode="viewport"
+
 [gui]
 
 theme/custom_font="res://fonts/PressStart2P-Regular.ttf"

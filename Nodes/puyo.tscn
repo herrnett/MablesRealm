@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://bpcbylu4aorjo"]
+
+[ext_resource type="Texture2D" uid="uid://672llagb05ms" path="res://gfx/faces_red_sheet.png" id="1_2s6cq"]
+[ext_resource type="Script" path="res://Nodes/puyo.gd" id="2_tfjku"]
+[ext_resource type="PackedScene" uid="uid://c34kqpjybfis5" path="res://Nodes/hud.tscn" id="3_8sox3"]
+[ext_resource type="AudioStream" uid="uid://cwamstj5saaqw" path="res://sfx/Tröte_1.ogg" id="4_atqmq"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mdj67"]
+polygon = PackedVector2Array(-14.4957, -7.42462, -8.48528, 7.07107, 7.07107, 17.3241, 22.4492, 19.3625, 15.1532, 27.5003, 2.52554, 32, -3.36739, 32, -17.3982, 24.9748, -23.2911, 19.9237, -28.3422, 6.73477, -32, 5.05108, -32, -6.45415, -24.1329, -19.9237, -15.4339, -28.0615)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sly3o"]
+polygon = PackedVector2Array(-2.6727, 4.23177, 3.78632, 16.2589, 8.90899, 21.6043, 17.6389, 26.4583, 12.2842, 30.0806, 4, 32, -7, 32, -18, 25.75, -24, 18.5, -26.5, 12.25, -28.5, 3.75, -28.25, -2.75, -29.5, -5.5, -29.5, -10.5, -19.5, -25.25, -7.24455, -32, -3.11814, -32, -4.89994, -10.4681)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bdjla"]
+polygon = PackedVector2Array(-3.92862, 6.17354, 5.61231, 15.1532, 16.8369, 17.9594, 25.1984, 16.8514, 23.0105, 21.0462, 15.368, 27.6179, -1.11362, 32, -11.1362, 29.8451, -17.818, 25.1679, -28.5088, 8.24081, -28.5088, -2.22725, -26.5042, -6.45901, -29.8451, -8.68626, -22.2725, -21.827, -14.6466, -26.7733, -7.87451, -27.8758, -8.97969, -7.57662)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_v68cb"]
+polygon = PackedVector2Array(-6.61458, -11.3393, -5.79084, 4.89994, 0, 16.2589, 6.23629, 22.7179, 15.5907, 28.5088, 7.79536, 32, -10.6908, 32, -24.277, 20.9361, -27.6179, 8.01809, -28.286, 2.22725, -27.1724, -2.89542, -32, -9.35443, -32, -13.3635, -25.6133, -21.827, -21.6043, -25.6133, -17.818, -24.4997, -13.5862, -29.8451, -7.57264, -32, -5.03968, -30.5531)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i6qp1"]
+texture = ExtResource("1_2s6cq")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_mdj67")
+1:0/0 = 0
+1:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_sly3o")
+2:0/0 = 0
+2:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_bdjla")
+3:0/0 = 0
+3:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_v68cb")
+4:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(0.729412, 0.768627, 0.878431, 1)
+1:1/0 = 0
+1:1/0/modulate = Color(0.729412, 0.768627, 0.878431, 1)
+2:1/0 = 0
+2:1/0/modulate = Color(0.729412, 0.768627, 0.878431, 1)
+3:1/0 = 0
+3:1/0/modulate = Color(0.729412, 0.768627, 0.878431, 1)
+
+[sub_resource type="TileSet" id="TileSet_tvsre"]
+tile_size = Vector2i(64, 64)
+uv_clipping = true
+occlusion_layer_0/light_mask = 1
+sources/0 = SubResource("TileSetAtlasSource_i6qp1")
+
+[node name="Puyo" type="TileMap"]
+tile_set = SubResource("TileSet_tvsre")
+rendering_quadrant_size = 64
+format = 2
+layer_0/name = "board"
+layer_0/tile_data = PackedInt32Array(1, 262144, 0, 65537, 262144, 0, 131073, 262144, 0, 196609, 262144, 0, 262145, 262144, 0, 327681, 262144, 0, 393217, 262144, 0, 458753, 262144, 0, 524289, 262144, 0, 589825, 262144, 0, 655361, 262144, 0, 720897, 262144, 0, 786433, 262144, 0, 851969, 262144, 0, 917505, 262144, 0, 983041, 262144, 0, 1048577, 262144, 0, 1114113, 262144, 0, 2, 262144, 0, 1114114, 262144, 0, 3, 262144, 0, 1114115, 262144, 0, 4, 262144, 0, 1114116, 262144, 0, 5, 262144, 0, 1114117, 262144, 0, 6, 262144, 0, 1114118, 262144, 0, 7, 262144, 0, 1114119, 262144, 0, 8, 262144, 0, 65544, 262144, 0, 131080, 262144, 0, 196616, 262144, 0, 262152, 262144, 0, 327688, 262144, 0, 393224, 262144, 0, 458760, 262144, 0, 524296, 262144, 0, 589832, 262144, 0, 655368, 262144, 0, 720904, 262144, 0, 786440, 262144, 0, 851976, 262144, 0, 917512, 262144, 0, 983048, 262144, 0, 1048584, 262144, 0, 1114120, 262144, 0)
+layer_1/name = "active"
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("2_tfjku")
+
+[node name="HUD" parent="." instance=ExtResource("3_8sox3")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_atqmq")

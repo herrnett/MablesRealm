@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://c34kqpjybfis5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_swfah"]
+bg_color = Color(1, 1, 1, 0)
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 640.0
+offset_right = 2048.0
+offset_bottom = 192.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_swfah")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 704.0
+offset_right = 832.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 32
+text = "NEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 640.0
+offset_top = 128.0
+offset_right = 896.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 24
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverLabel" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 576.0
+offset_bottom = 768.0
+theme_override_font_sizes/font_size = 64
+text = "Game
+over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 1920.0
+offset_right = 2048.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 24
+text = "New
+Game"

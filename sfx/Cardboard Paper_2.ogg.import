@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c45oaactc2qec"
+path="res://.godot/imported/Cardboard Paper_2.ogg-6c2b36b355e04b1ec2755bc85bc344f4.oggvorbisstr"
+
+[deps]
+
+source_file="res://sfx/Cardboard Paper_2.ogg"
+dest_files=["res://.godot/imported/Cardboard Paper_2.ogg-6c2b36b355e04b1ec2755bc85bc344f4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
