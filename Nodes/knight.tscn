@@ -1,0 +1,300 @@
+[gd_scene load_steps=14 format=3 uid="uid://x6w8cefd8b3s"]
+
+[ext_resource type="Texture2D" uid="uid://dpfhg5tlb3euo" path="res://gfx/td/red_idle.png" id="1_2lhul"]
+[ext_resource type="Texture2D" uid="uid://ydg3fv0d13i0" path="res://gfx/td/red_atk.png" id="2_krx7r"]
+[ext_resource type="Script" path="res://Nodes/knight.gd" id="3_w1qty"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xgx5i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2lhul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_krx7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_41qph"]
+radius = 32.0
+height = 128.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o35sb"]
+size = Vector2(60, 300)
+
+[sub_resource type="Animation" id="Animation_twc87"]
+resource_name = "atk"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.253073, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Standing:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Running:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_1cwbs"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(3, -35), Vector2(3, -45), Vector2(3, -35), Vector2(3, -42.0089)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Standing:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Running:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_gnv8v"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Standing:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Running:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fp8ey"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Standing:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Running:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_df6y3"]
+_data = {
+"RESET": SubResource("Animation_fp8ey"),
+"atk": SubResource("Animation_twc87"),
+"idle": SubResource("Animation_gnv8v"),
+"walk": SubResource("Animation_1cwbs")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ibdu6"]
+cull_mode = 1
+polygon = PackedVector2Array(28.3377, -73.8036, 24.6172, -84.5813, 15.0757, -95.0196, 3, -99, -9, -100, -18, -97, -28, -88, -33, -80, -35, -71, -35, -64, -31.0707, -52.6461, -23.7832, -45.5122, -15, -40, -7, -37, 2, -37, 9, -39, 15, -44, 21, -50, 25.1868, -57.1281, 28.978, -65.7668)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ys0jq"]
+polygon = PackedVector2Array(-33, -40, -47, -39, -55, -39, -67, -40, -68, -49, -57, -49, -58, -91, -53, -102, -45, -91, -45, -49, -35, -49)
+
+[node name="Knight" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_xgx5i")
+frame = 1
+speed_scale = 0.0
+offset = Vector2(3, -35)
+script = ExtResource("3_w1qty")
+
+[node name="BodyArea" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyArea"]
+position = Vector2(0, -35)
+shape = SubResource("CapsuleShape2D_41qph")
+
+[node name="Vision" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+position = Vector2(80, 0)
+shape = SubResource("RectangleShape2D_o35sb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_df6y3")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Standing" type="Node2D" parent="."]
+visible = false
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Standing"]
+occluder = SubResource("OccluderPolygon2D_ibdu6")
+occluder_light_mask = 2
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Standing"]
+show_behind_parent = true
+position = Vector2(98, 6)
+occluder = SubResource("OccluderPolygon2D_ys0jq")
+occluder_light_mask = 2
+
+[node name="Running" type="Node2D" parent="."]
+visible = false
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="Running"]
+position = Vector2(-11, 12)
+rotation = 0.598648
+occluder = SubResource("OccluderPolygon2D_ibdu6")
+occluder_light_mask = 2
+
+[node name="LightOccluder2D5" type="LightOccluder2D" parent="Running"]
+position = Vector2(-36, 56)
+rotation = 0.598648
+occluder = SubResource("OccluderPolygon2D_ibdu6")
+occluder_light_mask = 2
+
+[node name="LightOccluder2D4" type="LightOccluder2D" parent="Running"]
+show_behind_parent = true
+position = Vector2(52, 70)
+rotation = 0.837758
+occluder = SubResource("OccluderPolygon2D_ys0jq")
+occluder_light_mask = 2
+
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6f5gids4u6n8"]
-
-[ext_resource type="Script" path="res://Autobattle.gd" id="1_y3bbc"]
-
-[node name="Autobattle" type="Node2D"]
-script = ExtResource("1_y3bbc")

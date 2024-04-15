@@ -1,91 +1,124 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4k4mf6npvqf8"]
+[gd_scene load_steps=19 format=3 uid="uid://c4k4mf6npvqf8"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_yd81y"]
 [ext_resource type="PackedScene" uid="uid://bpcbylu4aorjo" path="res://Nodes/puyo.tscn" id="2_3md72"]
 [ext_resource type="Texture2D" uid="uid://dvo8rm58ngrtn" path="res://gfx/cardboard_bg.png" id="2_yrncl"]
+[ext_resource type="Texture2D" uid="uid://b7qk84osmkl88" path="res://gfx/tower_health_at_720_350.png" id="4_dew1n"]
 [ext_resource type="Texture2D" uid="uid://o8holtmw3ktq" path="res://gfx/lightmap.png" id="4_jeiof"]
-[ext_resource type="Texture2D" uid="uid://dpfhg5tlb3euo" path="res://gfx/td/red_idle.png" id="5_o4j8o"]
-[ext_resource type="Texture2D" uid="uid://ydg3fv0d13i0" path="res://gfx/td/red_atk.png" id="6_p4qdt"]
+[ext_resource type="Script" path="res://Nodes/Autobattler.gd" id="4_l1bpj"]
+[ext_resource type="Texture2D" uid="uid://cu1whu4axica6" path="res://gfx/hut_health_at_1665_445.png" id="5_61qje"]
+[ext_resource type="Script" path="res://Nodes/Tower.gd" id="6_d10v1"]
+[ext_resource type="Texture2D" uid="uid://dn23hs75w2sg0" path="res://gfx/lightmap_alt.png" id="6_vdxqb"]
+[ext_resource type="Script" path="res://Nodes/Hut.gd" id="8_up8pr"]
+[ext_resource type="Texture2D" uid="uid://jof5lcds1gwp" path="res://gfx/button_start.png" id="9_b7knd"]
+[ext_resource type="AudioStream" uid="uid://c2e8ldjddc5tw" path="res://sfx/Start_1.ogg" id="10_rw55h"]
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3dq6r"]
-closed = false
-polygon = PackedVector2Array(168, 1085, 174, 1088, 178, 1095, 179, 1101, 178, 1107, 174, 1113, 168, 1117, 158, 1117, 151, 1114, 147, 1107, 146, 1102, 146, 1097, 149, 1091, 153, 1087, 157, 1085, 161, 1084, 165, 1084)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3r62f"]
+size = Vector2(100, 200)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xgx5i"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_o4j8o")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_p4qdt")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="Animation" id="Animation_twc87"]
-resource_name = "atk"
-length = 0.5
+[sub_resource type="Animation" id="Animation_j4a5c"]
+resource_name = "new_animation"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("BG:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, -0.253073, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.3),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [1, 0]
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_1cwbs"]
-resource_name = "walk"
-length = 0.8
-loop_mode = 1
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p175q"]
+_data = {
+"new_animation": SubResource("Animation_j4a5c")
+}
+
+[sub_resource type="Animation" id="Animation_3e6v7"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(3, -35), Vector2(3, -45), Vector2(3, -35), Vector2(3, -42.0089)]
+"values": [Vector2(1291, 373)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
+tracks/1/path = NodePath(".:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_df6y3"]
+[sub_resource type="Animation" id="Animation_pjjir"]
+resource_name = "start_game"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1291, 373), Vector2(2347, 118)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.987856]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1c2aa"]
 _data = {
-"atk": SubResource("Animation_twc87"),
-"walk": SubResource("Animation_1cwbs")
+"RESET": SubResource("Animation_3e6v7"),
+"start_game": SubResource("Animation_pjjir")
 }
 
 [node name="Game" type="Node2D"]
@@ -97,54 +130,82 @@ centered = false
 
 [node name="Puyo" parent="." instance=ExtResource("2_3md72")]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Autobattler" type="Node2D" parent="."]
+script = ExtResource("4_l1bpj")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Node2D"]
-occluder = SubResource("OccluderPolygon2D_3dq6r")
+[node name="Tower" type="Node2D" parent="Autobattler"]
+position = Vector2(800, 800)
+script = ExtResource("6_d10v1")
 
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="Node2D"]
-position = Vector2(64, 0)
-occluder = SubResource("OccluderPolygon2D_3dq6r")
+[node name="TowerHealth" type="Sprite2D" parent="Autobattler/Tower"]
+position = Vector2(-80, -450)
+texture = ExtResource("4_dew1n")
+centered = false
 
-[node name="LightOccluder2D3" type="LightOccluder2D" parent="Node2D"]
-position = Vector2(128, 0)
-occluder = SubResource("OccluderPolygon2D_3dq6r")
+[node name="TowerArea" type="Area2D" parent="Autobattler/Tower"]
+monitoring = false
 
-[node name="LightOccluder2D4" type="LightOccluder2D" parent="Node2D"]
-position = Vector2(192, 0)
-occluder = SubResource("OccluderPolygon2D_3dq6r")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Autobattler/Tower/TowerArea"]
+shape = SubResource("RectangleShape2D_3r62f")
 
-[node name="LightOccluder2D5" type="LightOccluder2D" parent="Node2D"]
-position = Vector2(256, 0)
-occluder = SubResource("OccluderPolygon2D_3dq6r")
+[node name="Hut" type="Node2D" parent="Autobattler"]
+position = Vector2(1700, 800)
+script = ExtResource("8_up8pr")
 
-[node name="LightOccluder2D6" type="LightOccluder2D" parent="Node2D"]
-position = Vector2(320, 0)
-occluder = SubResource("OccluderPolygon2D_3dq6r")
+[node name="HutHealth" type="Sprite2D" parent="Autobattler/Hut"]
+position = Vector2(-35, -355)
+texture = ExtResource("5_61qje")
+centered = false
 
-[node name="PointLight2D" type="PointLight2D" parent="Node2D"]
-position = Vector2(1577, -213)
-scale = Vector2(12.875, 12.875)
+[node name="HutArea" type="Area2D" parent="Autobattler/Hut"]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Autobattler/Hut/HutArea"]
+shape = SubResource("RectangleShape2D_3r62f")
+
+[node name="Lighting" type="Node2D" parent="."]
+
+[node name="PointLightPuyo" type="PointLight2D" parent="Lighting"]
+position = Vector2(1941, 27)
+scale = Vector2(15, 15)
 shadow_enabled = true
 texture = ExtResource("4_jeiof")
 
-[node name="PointLight2D2" type="PointLight2D" parent="Node2D"]
-visible = false
-position = Vector2(-404, -181)
-scale = Vector2(12.875, 12.875)
+[node name="PointLightAutobattler" type="PointLight2D" parent="Lighting"]
+position = Vector2(1971, -198)
+scale = Vector2(14, 14)
 shadow_enabled = true
-texture = ExtResource("4_jeiof")
+shadow_item_cull_mask = 2
+texture = ExtResource("6_vdxqb")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="Node2D"]
+[node name="CanvasModulate" type="CanvasModulate" parent="Lighting"]
 color = Color(0.698039, 0.698039, 0.619608, 1)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(857, 859)
-sprite_frames = SubResource("SpriteFrames_xgx5i")
-speed_scale = 0.0
-offset = Vector2(3, -36.4688)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_df6y3")
+"": SubResource("AnimationLibrary_p175q")
 }
+
+[node name="Start" type="Sprite2D" parent="."]
+position = Vector2(1291, 373)
+texture = ExtResource("9_b7knd")
+
+[node name="Button" type="Button" parent="Start"]
+offset_left = -161.0
+offset_top = -90.0
+offset_right = 171.0
+offset_bottom = 91.0
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Start"]
+libraries = {
+"": SubResource("AnimationLibrary_1c2aa")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Start"]
+stream = ExtResource("10_rw55h")
+
+[connection signal="game_lost" from="Puyo" to="." method="_on_puyo_game_lost"]
+[connection signal="spawn_ally" from="Puyo" to="." method="_on_puyo_spawn_ally"]
+[connection signal="died" from="Autobattler/Hut" to="Autobattler" method="_on_hut_died"]
+[connection signal="pressed" from="Start/Button" to="." method="_on_button_pressed"]
