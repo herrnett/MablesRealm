@@ -12,14 +12,12 @@ signal spawn_ally(bonus : int, type : String)
 signal game_lost
 
 #test sets
-var test_puyos = [Vector2i(2, 0), Vector2i(2, 0)]
-var test_next_puyos = [[Vector2i(1, 0), Vector2i(1, 0)], \
-						[Vector2i(0, 0), Vector2i(0, 0)], \
-						[Vector2i(3, 0), Vector2i(3, 0)]]
+var test_puyos = [Vector2i(3, 0), Vector2i(3, 0)]
+var test_next_puyos = [[Vector2i(3, 0), Vector2i(3, 0)], \
+						[Vector2i(2, 0), Vector2i(2, 0)], \
+						[Vector2i(2, 0), Vector2i(2, 0)]]
 
 #grid variables
-const COLS : int = 8
-const ROWS : int = 18
 const TILE_SIZE : int = 64
 
 #movement variables
@@ -30,14 +28,13 @@ var cur_pos : Vector2i
 const directions := [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.DOWN]
 var steps : Array				#per-frame-counter
 var steps_req : int = 80		#when reached, will move the piece
-var initial_speed : float = 5	#initial/regular falling speed
+var initial_speed : float = 3	#initial/regular falling speed
 var current_speed : float		#current falling speed
 
 #tilemap variables
 var tile_id : int = 0
 var puyos_atlas : Array
 var next_puyos_atlas : Array
-var red_atlas : Array
 var red_matches : Array
 var yellow_matches : Array
 var green_matches : Array
@@ -63,12 +60,17 @@ var rotation_index : int = 3
 var current_puyos : Array
 var await_new_puyo := false
 var new_puyo_waittime : float = 0
+var puyos_to_clear : Array
 
 #plaster variables
+var red_atlas : Array
 var yellow_atlas : Array
 var green_atlas : Array
 var blue_atlas : Array
 var atlases := [red_atlas, yellow_atlas, green_atlas, blue_atlas]
+
+#dont try this at home
+var updatecounter = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -125,6 +127,16 @@ func _process(delta):
 					await_new_puyo = false
 					new_puyo_waittime = 0
 				else: game_over()
+		
+		updatecounter += 20
+		if updatecounter > 100:
+			update_board()
+			updatecounter = 0
+	elif Globals.gameState == Globals.STATE_GAMEOVER:
+		clear_puyos()
+		clear_field()
+		update_board()
+		
 
 func create_puyos():
 	#reset everything
@@ -227,7 +239,7 @@ func land_puyos():
 					set_cell(board_layer, final_pos, tile_id, puyos_atlas[index])
 					final_puyo_pos.append(final_pos)
 				index += 1
-	update_local_chain(final_puyo_pos)
+	update_board()
 	play_land_sound()
 
 func update_local_chain(puyo_positions):
@@ -238,14 +250,11 @@ func update_local_chain(puyo_positions):
 			var neighbor_type = get_cell_atlas_coords(board_layer, neighbor)
 			if puyo_type == neighbor_type:
 				update_color_atlas(puyo_type, puyo, neighbor)
-	create_plasters()
-	#check_for_chains()
 
 func check_for_chains(combo = 0):
-	var red_chains = 0
-	var yellow_chains = 0
-	var green_chains = 0
-	var blue_chains = 0
+	#puyos_to_clear = [] #instead of checking the whole board, i should just check the surroundings...
+	var chains = [0, 0, 0, 0]
+	var color = 0
 	for color_matches in matches:
 		var not_chains = []
 		while color_matches.size() > 0:
@@ -256,30 +265,79 @@ func check_for_chains(combo = 0):
 			while counter < temp_collection.size():
 				#loop over array from back
 				for i in range(color_matches.size()-1, -1, -1):
-					if temp_collection[counter].x == color_matches[i].x \
-					or temp_collection[counter].x == color_matches[i].y \
-					or temp_collection[counter].y == color_matches[i].x \
-					or temp_collection[counter].y == color_matches[i].y:
+					if temp_collection[counter][0] == color_matches[i][0] \
+					or temp_collection[counter][0] == color_matches[i][1] \
+					or temp_collection[counter][1] == color_matches[i][0] \
+					or temp_collection[counter][1] == color_matches[i][1]:
 						temp_collection.append(color_matches[i])
 						color_matches.remove_at(i)
 				counter += 1
-			
-			if temp_collection.size() < 4:
-				color_matches.append_array(not_chains)
-			else: score(temp_collection)
-		color_matches = not_chains
-	#TODO: puyos bewegen,(alle gelöschten + up), listen updaten, erneut prüfen. 
-	# wenn was da ist: combo+1, nochmal. 
+			if temp_collection.size() < 3:
+				not_chains.append_array(temp_collection)
+			else: 
+				score(temp_collection, color)
+				chains[color] += 1
+		matches[color].append_array(not_chains)
+		color += 1
 
 #TODO: Löschen fancy aussehen lassen
-func score(chain):
-	var bonus = chain.size()-4
-	#TODO: lösche chain und links, spawne
+func score(chain, color):
+	puyos_to_clear.append_array(chain)
+	var bonus = chain.size()-3
+	for puyo in chain:
+		var plaster_to_delete = find_shared_border(puyo[0], puyo[1])
+		match color:
+			0: 
+				for i in range(red_atlas.size()-1, -1, -1):
+					if red_atlas[i][1] == plaster_to_delete[1]: 
+						red_atlas[i][2].queue_free()
+						red_atlas.remove_at(i)
+			1:
+				for i in range(yellow_atlas.size()-1, -1, -1):
+					if yellow_atlas[i][1] == plaster_to_delete[1]: 
+						yellow_atlas[i][2].queue_free()
+						yellow_atlas.remove_at(i)
+			2:
+				for i in range(green_atlas.size()-1, -1, -1):
+					if green_atlas[i][1] == plaster_to_delete[1]: 
+						green_atlas[i][2].queue_free()
+						green_atlas.remove_at(i)
+			3: 
+				for i in range(blue_atlas.size()-1, -1, -1):
+					if blue_atlas[i][1] == plaster_to_delete[1]: 
+						blue_atlas[i][2].queue_free()
+						blue_atlas.remove_at(i)
+		for i in puyo:
+			erase_cell(board_layer, i)
+	match color:
+		0: emit_signal("spawn_ally", bonus, "KNIGHT") #spawn_ally(bonus : int, type : String)
+		1: emit_signal("spawn_ally", bonus, "HEALER")
+		2: emit_signal("spawn_ally", bonus, "ARCHER")
+		3: emit_signal("spawn_ally", bonus, "WIZARD")
+	
+	
+	for col in range (7, 1, -1):
+		for row in range(16, 0, -1):
+			var pos = Vector2i(col, row)
+			if is_free(pos + Vector2i.DOWN) and not is_free(pos):
+				var temp = get_cell_atlas_coords(board_layer, pos)
+				erase_cell(board_layer, pos)
+				move_down(pos, temp)
 	
 
+func clear_field():
+	for col in range (7, 1, -1):
+		for row in range(16, 0, -1):
+			var pos = Vector2i(col, row)
+			erase_cell(board_layer, pos)
 
-#gets the type (Vector2i of tileset) of match, and the matching objects
-func update_color_atlas(puyo_type, puyo, neighbor):
+func move_down(pos, type):
+	if is_free(pos + Vector2i.DOWN):
+		move_down(pos + Vector2i.DOWN, type)
+	else:
+		set_cell(board_layer, pos, tile_id, type)
+
+func find_shared_border(puyo, neighbor):
 	var a = map_to_local(puyo)
 	var b = map_to_local(neighbor)
 	var orient
@@ -299,49 +357,86 @@ func update_color_atlas(puyo_type, puyo, neighbor):
 	else:
 		x = shared_border
 		y = a.y
-	coordinates = Vector2i(x, y)
+	return [orient, Vector2i(x, y)]
+
+func update_board():
+	for color_atlas in atlases:
+		for i in range(color_atlas.size()-1, -1, -1):
+			color_atlas[i][2].queue_free()
+			color_atlas.pop_back()
+	for color_matches in matches:
+		color_matches = []
+	
+	for col in range (7, 1, -1):
+		for row in range(16, 0, -1):
+			var pos = Vector2i(col, row)
+			if not is_free(pos):
+				update_local_chain([pos])
+	
+	create_plasters()
+	check_for_chains()
+
+#gets the type (Vector2i of tileset) of match, and the matching objects
+func update_color_atlas(puyo_type, puyo, neighbor):
+	var temp = find_shared_border(puyo, neighbor)
+	var orient = temp[0]
+	var coordinates = temp[1]
 
 	match puyo_type:
 		Vector2i(0,0):
 			if not red_atlas.has([orient, coordinates]):
 				red_atlas.append([orient, coordinates])
+			if not red_matches.has([puyo,neighbor]) \
+			and not red_matches.has([neighbor,puyo]):
 				red_matches.append([puyo,neighbor])
 				#somethingchanged = true
 		Vector2i(1,0):
 			if not yellow_atlas.has([orient, coordinates]):
 				yellow_atlas.append([orient, coordinates])
+			if not yellow_matches.has([puyo,neighbor]) \
+			and not yellow_matches.has([neighbor,puyo]):
 				yellow_matches.append([puyo,neighbor])
 				#somethingchanged = true
 		Vector2i(2,0):
 			if not green_atlas.has([orient, coordinates]):
 				green_atlas.append([orient, coordinates])
+			if not green_matches.has([puyo,neighbor]) \
+			and not green_matches.has([neighbor,puyo]):
 				green_matches.append([puyo,neighbor])
 				#somethingchanged = true
 		Vector2i(3,0):
 			if not blue_atlas.has([orient, coordinates]):
 				blue_atlas.append([orient, coordinates])
+			if not blue_matches.has([puyo,neighbor]) \
+			and not blue_matches.has([neighbor,puyo]):
 				blue_matches.append([puyo,neighbor])
 				#somethingchanged = true
 	#if somethingchanged: play_land_sound()
 
 func create_plasters():
 	var color = 0
-	for atlas in atlases:
-		for plaster_info in atlas:
-			draw_plaster(plaster_info, color)
+	for color_atlas in atlases:
+		for plaster_info in color_atlas:
+			if plaster_info.size() == 2:
+				var plaster = Sprite2D.new()
+				match color:
+					0: 
+						plaster.texture = plaster_red
+						plaster_info.append(plaster)
+					1: 
+						plaster.texture = plaster_yellow
+						plaster_info.append(plaster)
+					2: 
+						plaster.texture = plaster_green
+						plaster_info.append(plaster)
+					3: 
+						plaster.texture = plaster_blue
+						plaster_info.append(plaster)
+				if plaster_info[0] == 1:
+					plaster.rotation = 1.5
+				plaster.position = plaster_info[1]
+				add_child(plaster)
 		color += 1
-
-func draw_plaster(info, color):
-	var plaster = Sprite2D.new()
-	match color:
-		0: plaster.texture = plaster_red
-		1: plaster.texture = plaster_yellow
-		2: plaster.texture = plaster_green
-		3: plaster.texture = plaster_blue
-	if info[0] == 1:
-		plaster.rotation = 1.5
-	plaster.position = info[1]
-	add_child(plaster)
 
 func calculate_shared_border(a, b):
 	if a > b: return a - (TILE_SIZE/2)

@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://yxsffvr08t38"]
 
-[ext_resource type="AudioStream" uid="uid://0sgvfyaqw7th" path="res://ost/LD55_Intro.ogg" id="1_xdw4j"]
+[ext_resource type="AudioStream" uid="uid://elsmoembv4er" path="res://ost/LD55_Theme_1.ogg" id="1_7dkyb"]
 [ext_resource type="Script" path="res://singletons/Musicplayer.gd" id="2"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
-stream = ExtResource("1_xdw4j")
+stream = ExtResource("1_7dkyb")
+volume_db = -80.0
 max_polyphony = 10
 script = ExtResource("2")
 fadetime = 2

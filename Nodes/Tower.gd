@@ -2,11 +2,16 @@ extends Node2D
 
 const type = "ALLY"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+signal died
 
+var max_hp = 100
+var current_hp = 100
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	$Control.size.x = 1.9*current_hp
+
+func hurt():
+	current_hp-=1
+	if current_hp < 1:
+		emit_signal("died")
+		$TowerArea.monitorable = false

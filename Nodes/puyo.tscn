@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://672llagb05ms" path="res://gfx/faces_red_sheet.png" id="1_2s6cq"]
 [ext_resource type="Script" path="res://Nodes/puyo.gd" id="2_tfjku"]
-[ext_resource type="AudioStream" uid="uid://cwamstj5saaqw" path="res://sfx/Tröte_1.ogg" id="4_atqmq"]
+[ext_resource type="AudioStream" uid="uid://cwamstj5saaqw" path="res://sfx/honk1.ogg" id="3_ff47h"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mdj67"]
 polygon = PackedVector2Array(-14.4957, -7.42462, -8.48528, 7.07107, 7.07107, 17.3241, 22.4492, 19.3625, 15.1532, 27.5003, 2.52554, 32, -3.36739, 32, -17.3982, 24.9748, -23.2911, 19.9237, -28.3422, 6.73477, -32, 5.05108, -32, -6.45415, -24.1329, -19.9237, -15.4339, -28.0615)
@@ -58,4 +58,5 @@ layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_tfjku")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_atqmq")
+stream = ExtResource("3_ff47h")
+volume_db = -2.0
